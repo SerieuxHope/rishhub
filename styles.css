@@ -1,0 +1,83 @@
+@font-face {
+  font-family: 'LEDDot';
+  src: url('./LED Dot-Matrix 400.ttf') format('truetype');
+}
+
+body {
+  margin: 0;
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image:
+    radial-gradient(circle at 25% 75%, rgba(139, 0, 0, 0.3), transparent 50%),
+    radial-gradient(circle at 75% 50%, rgba(139, 0, 0, 0.5), transparent 60%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: 'LEDDot', monospace;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.line {
+  height: 170px;
+  width: 4px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    red,
+    red 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.text-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 170px; 
+}
+
+.red-line {
+  color: red;
+  font-size: 70px;
+  line-height: 1;
+}
+
+.white-line {
+  color: white;
+  font-size: 28px;
+  margin-top: 10px;
+}
+
+.led-header {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+}
+
+.logo {
+  width: 50px; 
+  height: 50px;
+  object-fit: contain;
+  image-rendering: pixelated; 
+  opacity: 1;
+  filter: brightness(1.3); 
+}
+
+
+.name {
+  font-family: 'LEDDot', monospace;
+  color: gray;
+  font-size: 18px;
+  line-height: 1.3;
+}
