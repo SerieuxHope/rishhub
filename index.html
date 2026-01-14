@@ -11,38 +11,140 @@
 </head>
 
 <body>
-  <header class="led-header">
-    <img src="./r-logo.png" alt="R Logo" class="logo" />
-    <div class="name">
-      <div class="line-1">RISHABH &lt; &lt;</div>
-      <div class="line-2">&gt; &gt; DWIVEDI</div>
-    </div>
-  </header>
-  <div class="social-links">
-    <div class="social-label">SOCIALS</div>
-    <div class="icons">
-      <a href="https://www.instagram.com/rishhub.in/" target="_blank">
-        <img src="insta_icon.svg" alt="Instagram" />
-      </a>
-      <a href="https://www.linkedin.com/in/serieuxhope/" target="_blank">
-        <img src="linkedin_icon.svg" alt="LinkedIn" />
-      </a>
-    </div>
-  </div>
-
-  <div class="main-container">
-    <div class="wrapper">
-      <div class="line"></div>
-      <div class="text-block">
-        <div class="red-line">
-          <span class="top">COMI</span><br />
-          <span class="bottom">NG...</span>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="top-bar">
+      <div class="brand">
+        <img src="./r_logo.svg" alt="R Logo" class="brand-logo" />
+        <div class="brand-name">
+          <div>RISHABH &lt;&lt;</div>
+          <div>&gt;&gt; DWIVEDI</div>
         </div>
-        <div class="white-line">SOON.</div>
       </div>
-    </div>
+      <div class="contact-info">
+        &gt; CONTACT ME : <a href="mailto:x@rishhub.in"
+          style="color: inherit; text-decoration: none;"></a>X@RISHHUB.IN</a>
+      </div>
+    </header>
 
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Left Column -->
+      <section class="hero-text">
+        <div class="hero-title led-text">
+          <div>COMMUNITY.</div>
+          <div>CODE.</div>
+          <div>DESIGN.</div>
+        </div>
+        <p class="hero-description">
+          I build communities, design things and code programs to make things better and easy.
+        </p>
+
+        <!-- Past Companies -->
+        <!-- Past Companies removed -->
+      </section>
+
+      <!-- Right Column -->
+      <section class="cards-section">
+        <!-- Community Card -->
+        <div class="card">
+          <div class="card-header led-text">COMMUNITY</div>
+          <div class="card-body">
+            <div class="card-role">Community Executive</div>
+            <div class="hudle-logo-container">
+              <a href="https://www.linkedin.com/company/hudle/" target="_blank" class="hudle-link">
+                <img src="hudle_logo.svg" alt="HUDLE" class="hudle-logo" />
+              </a>
+              <small class="hudle-url">www.hudle.in</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Card -->
+        <div class="card center-card">
+          <div class="card-header led-text">CODE</div>
+          <div class="card-body">
+            <a href="https://github.com/serieuxhope" target="_blank" class="theme-btn">
+              Find On GitHub
+            </a>
+          </div>
+        </div>
+
+        <!-- Design Card -->
+        <div class="card">
+          <div class="card-header led-text">DESIGN</div>
+          <div class="card-body">
+            <div class="design-wrapper" id="poster-container">
+              <a href="https://drive.google.com/drive/folders/1A-kGu4XTpxvvx73edEwSzN22xnQZYZrO?usp=sharing"
+                target="_blank" class="poster-link">
+                <img src="poster_new_chapter.png" alt="New Chapter" class="poster-image" id="poster-image" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- New Bottom Section (Split Layout) -->
+    <footer class="bottom-section">
+      <!-- Left Half: Companies -->
+      <div class="bottom-left">
+        <img src="companies_strip.svg" alt="Companies I Have Worked With" class="companies-full-img" />
+      </div>
+
+      <!-- Right Half: Socials -->
+      <div class="bottom-right">
+        <div class="socials-container">
+          <div class="social-label led-text">SOCIALS</div>
+          <div class="social-icons-grid">
+            <a href="https://www.linkedin.com/in/serieuxhope/" target="_blank" class="icon-wrapper">
+              <img src="icon_linkedin.png" alt="LinkedIn" />
+            </a>
+            <a href="https://www.instagram.com/rishhub.in/" target="_blank" class="icon-wrapper">
+              <img src="icon_insta.png" alt="Instagram" />
+            </a>
+            <a href="https://github.com/serieuxhope" target="_blank" class="icon-wrapper">
+              <img src="icon_github.png" alt="GitHub" />
+            </a>
+            <a href="#" class="x-link icon-wrapper">
+              <img src="icon_x.png" alt="X" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
+
+  <script>
+    // 3D Tilt Effect for Poster
+    const container = document.getElementById('poster-container');
+    const poster = document.getElementById('poster-image');
+
+    if (container && poster) {
+      container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Calculate rotation based on cursor position
+        // Center of the element is (0.5, 0.5)
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateMax = 20; // Max rotation degrees
+
+        const rotateX = ((y - centerY) / centerY) * -rotateMax; // Invert Y axis for natural feel
+        const rotateY = ((x - centerX) / centerX) * rotateMax;
+
+        poster.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+      });
+
+      container.addEventListener('mouseleave', () => {
+        // Reset transform on leave
+        poster.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+      });
+    }
+  </script>
 </body>
 
 </html>
