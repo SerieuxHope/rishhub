@@ -47,22 +47,32 @@ body {
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100vh;
+  /* Better than height: 100% */
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 40px;
   box-sizing: border-box;
   border-left: 1px solid #111;
   border-right: 1px solid #111;
+  position: relative;
+  width: 100%;
 }
 
 /* Header */
 .top-bar {
   display: flex;
+  flex-direction: row;
+  /* Force row for desktop */
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  /* Center vertically */
   padding-top: 40px;
-  height: 80px;
+  height: auto;
+  /* Let content define height */
+  min-height: 80px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .brand {
@@ -95,10 +105,11 @@ body {
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  /* Left text area vs Right cards area */
   gap: 60px;
   align-items: center;
   margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Left Section */
@@ -106,23 +117,22 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding-left: 20px;
+  padding: 0 0 0 20px;
+  /* Zero top/bottom padding */
   border-left: 2px dotted var(--primary-red);
-  /* The dotted line on the left */
-  padding-bottom: 0;
-  /* Remove extra padding */
   height: fit-content;
-  /* Hug content height vertically */
   align-self: center;
-  /* Center in grid cell but don't stretch */
+  gap: 15px;
 }
 
 .hero-title {
   font-size: 48px;
   color: var(--primary-red);
-  line-height: 1.1;
+  line-height: 1;
+  /* Match border start exactly */
   letter-spacing: 2px;
-  margin-bottom: 20px;
+  margin: 0;
+  /* Align with border top */
   text-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
 }
 
@@ -131,22 +141,24 @@ body {
   font-family: 'Pathway Extreme', sans-serif;
   font-size: 18px;
   max-width: 400px;
-  line-height: 1.5;
-  margin-top: 0;
+  line-height: 1.4;
+  /* Match border end exactly */
+  margin: 0;
+  /* Align with border bottom */
 }
 
 /* Bottom Section (New Split Layout) */
 .bottom-section {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  /* Match main-content grid */
+  /* Match main layout */
   gap: 60px;
-  /* Match main-content gap */
   width: 100%;
   margin-top: auto;
   margin-bottom: 20px;
   min-height: 150px;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .bottom-left,
