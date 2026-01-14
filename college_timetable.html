@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Timetable</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 2.5em;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .download-btn {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      margin: 30px auto;
+      padding: 20px 30px;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+    }
+    .info {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      border-left: 4px solid #ffd700;
+    }
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .day-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .day-title {
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #ffd700;
+    }
+    .class-item {
+      margin: 8px 0;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+    .instructions {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 15px;
+      margin: 30px 0;
+    }
+    .instructions h3 {
+      color: #ffd700;
+      margin-bottom: 15px;
+    }
+    .instructions ol {
+      padding-left: 20px;
+    }
+    .instructions li {
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+
+    /* Return to rishhub.in button styling */
+    .return-btn {
+      display: block;
+      width: 100%;
+      max-width: 400px;
+      margin: 35px auto 0 auto;
+      padding: 15px 30px;
+      background: linear-gradient(45deg, #4e54c8, #8f94fb);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      text-align: center;
+      font-size: 1.1em;
+      font-weight: 500;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+    .return-btn:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(45deg, #8f94fb, #4e54c8);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SOU College Timetable <br>(BCA - 3rd Sem : A1 Batch)</h1>
+    
+    <div class="info">
+      <strong>Semester Duration :</strong> August 11, 2025 - November 8, 2025<br />
+      <strong>Reminder :</strong> 10 minutes before each class<br />
+      <strong>Compatible with :</strong> Apple Calendar, Google Calendar, Outlook
+    </div>
+
+    <button class="download-btn" onclick="downloadICS()">
+      Download Timetable (.ics file)
+    </button>
+
+    <div class="instructions">
+      <h3>How to Import to Apple Calendar :</h3>
+      <ol>
+        <li>Click the download button above</li>
+        <li>The .ics file will be saved to your Downloads folder</li>
+        <li>Double-click the downloaded file</li>
+        <li>Choose which calendar to add it to</li>
+        <li>All your classes will appear with 10-minute reminders!</li>
+      </ol>
+    </div>
+
+    <div class="schedule-grid">
+      <div class="day-card">
+        <div class="day-title">Monday</div>
+        <div class="class-item">7:30-9:10: Flutter (PM1) - A1</div>
+        <div class="class-item">9:20-10:10: Flutter (PM1)</div>
+        <div class="class-item">10:10-11:00: DPIC (JB)</div>
+        <div class="class-item">11:05-11:55: CJ (DNR)</div>
+      </div>
+      
+      <div class="day-card">
+        <div class="day-title">Tuesday</div>
+        <div class="class-item">7:30-8:20: Flutter (JP2)</div>
+        <div class="class-item">8:20-9:10: VM (MT1)</div>
+        <div class="class-item">9:20-11:00: UI/UX (AD) - A1</div>
+        <div class="class-item">11:05-11:55: UI/UX (IG)</div>
+      </div>
+      
+      <div class="day-card">
+        <div class="day-title">Wednesday</div>
+        <div class="class-item">7:30-9:10: PP (JP1) - A1</div>
+        <div class="class-item">9:20-10:10: PP (JP1)</div>
+        <div class="class-item">10:10-11:00: CJ (AG)</div>
+        <div class="class-item">11:05-11:55: DPIC (JB)</div>
+      </div>
+      
+      <div class="day-card">
+        <div class="day-title">Thursday</div>
+        <div class="class-item">7:30-8:20: UI/UX (IG)</div>
+        <div class="class-item">8:20-9:10: Flutter (PM1)</div>
+        <div class="class-item">9:20-10:10: CJ (DNR)</div>
+        <div class="class-item">10:10-11:00: PP (JP1)</div>
+        <div class="class-item">11:05-12:45: ST (MP) - A1</div>
+      </div>
+      
+      <div class="day-card">
+        <div class="day-title">Friday</div>
+        <div class="class-item">7:30-8:20: UI/UX (IG)</div>
+        <div class="class-item">8:20-9:10: VM (MT1)</div>
+        <div class="class-item">9:20-11:00: CJ (DNR) - A1</div>
+        <div class="class-item">11:05-11:55: PP (JP1)</div>
+      </div>
+    </div>
+
+    <!-- Return to rishhub.in button -->
+    <a class="return-btn" href="https://rishhub.in" target="_blank" rel="noopener">
+      Return to rishhub.in
+    </a>
+  </div>
+
+  <script>
+    function downloadICS() {
+      const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Silver Oak University//College Timetable//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:IST
+END:STANDARD
+END:VTIMEZONE
+
+BEGIN:VEVENT
+UID:flutter-pm1-mon-730@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T073000
+DTEND;TZID=Asia/Kolkata:20250806T091000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=MO
+SUMMARY:FLUTTER (PM1) - A1
+LOCATION:B-204/208
+DESCRIPTION:Flutter Development Class - A1 Section
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Flutter class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:flutter-pm1-mon-920@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T092000
+DTEND;TZID=Asia/Kolkata:20250806T101000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=MO
+SUMMARY:FLUTTER (PM1)
+LOCATION:B-218
+DESCRIPTION:Flutter Development Class
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Flutter class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:dpic-jb-mon-1010@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T101000
+DTEND;TZID=Asia/Kolkata:20250806T110000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=MO
+SUMMARY:DPIC (JB)
+LOCATION:B-218
+DESCRIPTION:Digital Professionalism & Interpersonal Competence
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:DPIC class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:cj-dnr-mon-1105@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T110500
+DTEND;TZID=Asia/Kolkata:20250806T115500
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=MO
+SUMMARY:CJ (DNR)
+LOCATION:B-218
+DESCRIPTION:Computer Java Programming
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:CJ class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:flutter-jp2-tue-730@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T073000
+DTEND;TZID=Asia/Kolkata:20250806T082000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TU
+SUMMARY:FLUTTER (JP2)
+LOCATION:B-218
+DESCRIPTION:Flutter Development Class
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Flutter class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:vm-mt1-tue-820@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T082000
+DTEND;TZID=Asia/Kolkata:20250806T091000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TU
+SUMMARY:VM (MT1)
+LOCATION:B-218
+DESCRIPTION:Vedic Mathematics
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:VM class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:uiux-ad-tue-920@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T092000
+DTEND;TZID=Asia/Kolkata:20250806T110000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TU
+SUMMARY:UI/UX (AD) - A1
+LOCATION:B-204/208
+DESCRIPTION:User Interface/User Experience Design - A1 Section
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:UI/UX class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:uiux-ig-tue-1105@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T110500
+DTEND;TZID=Asia/Kolkata:20250806T115500
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TU
+SUMMARY:UI/UX (IG)
+LOCATION:B-218
+DESCRIPTION:User Interface/User Experience Design
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:UI/UX class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:pp-jp1-wed-730@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T073000
+DTEND;TZID=Asia/Kolkata:20250806T091000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=WE
+SUMMARY:PP (JP1) - A1
+LOCATION:B-204/208
+DESCRIPTION:Python Programming - A1 Section
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:PP class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:pp-jp1-wed-920@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T092000
+DTEND;TZID=Asia/Kolkata:20250806T101000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=WE
+SUMMARY:PP (JP1)
+LOCATION:B-218
+DESCRIPTION:Python Programming
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:PP class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:cj-ag-wed-1010@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T101000
+DTEND;TZID=Asia/Kolkata:20250806T110000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=WE
+SUMMARY:CJ (AG)
+LOCATION:B-218
+DESCRIPTION:Computer Java Programming
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:CJ class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:dpic-jb-wed-1105@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250806T110500
+DTEND;TZID=Asia/Kolkata:20250806T115500
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=WE
+SUMMARY:DPIC (JB)
+LOCATION:B-218
+DESCRIPTION:Digital Professionalism & Interpersonal Competence
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:DPIC class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:uiux-ig-thu-730@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250807T073000
+DTEND;TZID=Asia/Kolkata:20250807T082000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TH
+SUMMARY:UI/UX (IG)
+LOCATION:B-218
+DESCRIPTION:User Interface/User Experience Design
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:UI/UX class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:flutter-pm1-thu-820@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250807T082000
+DTEND;TZID=Asia/Kolkata:20250807T091000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TH
+SUMMARY:FLUTTER (PM1)
+LOCATION:B-218
+DESCRIPTION:Flutter Development Class
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Flutter class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:cj-dnr-thu-920@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250807T092000
+DTEND;TZID=Asia/Kolkata:20250807T101000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TH
+SUMMARY:CJ (DNR)
+LOCATION:B-218
+DESCRIPTION:Computer Java Programming
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:CJ class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:pp-jp1-thu-1010@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250807T101000
+DTEND;TZID=Asia/Kolkata:20250807T110000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TH
+SUMMARY:PP (JP1)
+LOCATION:B-218
+DESCRIPTION:Python Programming
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:PP class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:st-mp-thu-1105@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250807T110500
+DTEND;TZID=Asia/Kolkata:20250807T124500
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=TH
+SUMMARY:ST (MP) - A1
+LOCATION:B-204/208
+DESCRIPTION:Software Testing - A1 Section
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:ST class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:uiux-ig-fri-730@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250808T073000
+DTEND;TZID=Asia/Kolkata:20250808T082000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=FR
+SUMMARY:UI/UX (IG)
+LOCATION:B-202
+DESCRIPTION:User Interface/User Experience Design
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:UI/UX class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:vm-mt1-fri-820@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250808T082000
+DTEND;TZID=Asia/Kolkata:20250808T091000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=FR
+SUMMARY:VM (MT1)
+LOCATION:B-202
+DESCRIPTION:Vedic Mathematics
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:VM class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:cj-dnr-fri-920@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250808T092000
+DTEND;TZID=Asia/Kolkata:20250808T110000
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=FR
+SUMMARY:CJ (DNR) - A1
+LOCATION:B-204/208
+DESCRIPTION:Computer Java Programming - A1 Section
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:CJ class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+BEGIN:VEVENT
+UID:pp-jp1-fri-1105@silveroak.edu
+DTSTART;TZID=Asia/Kolkata:20250808T110500
+DTEND;TZID=Asia/Kolkata:20250808T115500
+RRULE:FREQ=WEEKLY;UNTIL=20251108T235959Z;BYDAY=FR
+SUMMARY:PP (JP1)
+LOCATION:B-218
+DESCRIPTION:Python Programming
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:PP class starting in 10 minutes
+TRIGGER:-PT10M
+END:VALARM
+END:VEVENT
+
+END:VCALENDAR`;
+
+      const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'silver_oak_timetable.ics';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href);
+    }
+  </script>
+</body>
+</html>
