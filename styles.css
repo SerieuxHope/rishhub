@@ -321,7 +321,7 @@ body {
   height: auto;
   object-fit: contain;
   /* White by default */
-  opacity: 0.8;
+  opacity: 1;
   filter: brightness(0) invert(1);
   transition: all 0.3s ease;
 }
@@ -424,8 +424,9 @@ body {
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
   transform-style: preserve-3d;
   /* crucial for 3d tilt */
+  /* Transition only for box-shadow, JS will handle transform for physics */
   transition: box-shadow 0.4s ease;
-  /* Removed transform transition for instant response (no delay) */
+  will-change: transform;
 }
 
 .design-wrapper:hover .poster-image {

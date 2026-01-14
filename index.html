@@ -22,8 +22,7 @@
         </div>
       </div>
       <div class="contact-info">
-        &gt; CONTACT ME : <a href="mailto:x@rishhub.in"
-          style="color: inherit; text-decoration: none;"></a>X@RISHHUB.IN</a>
+        &gt; CONTACT ME : <a href="mailto:x@rishhub.in" style="color: inherit; text-decoration: none;">X@RISHHUB.IN</a>
       </div>
     </header>
 
@@ -106,7 +105,7 @@
             <a href="https://github.com/serieuxhope" target="_blank" class="icon-wrapper">
               <img src="icon_github.png" alt="GitHub" />
             </a>
-            <a href="#" class="x-link icon-wrapper">
+            <a href="https://x.com/serieux_hope" class="x-link icon-wrapper">
               <img src="icon_x.png" alt="X" />
             </a>
           </div>
@@ -116,33 +115,58 @@
   </div>
 
   <script>
-    // 3D Tilt Effect for Poster
+    // Advanced Physics for Poster
     const container = document.getElementById('poster-container');
     const poster = document.getElementById('poster-image');
 
     if (container && poster) {
-      container.addEventListener('mousemove', (e) => {
-        const rect = container.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+      let targetX = 0, targetY = 0;
+      let currentX = 0, currentY = 0;
+      let mouseActive = false;
+      const lerpAmount = 0.08;
 
-        // Calculate rotation based on cursor position
-        // Center of the element is (0.5, 0.5)
+      container.addEventListener('mousemove', (e) => {
+        mouseActive = true;
+        const rect = container.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
+        const rotateMax = 15;
 
-        const rotateMax = 20; // Max rotation degrees
-
-        const rotateX = ((y - centerY) / centerY) * -rotateMax; // Invert Y axis for natural feel
-        const rotateY = ((x - centerX) / centerX) * rotateMax;
-
-        poster.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        targetX = ((mouseY - centerY) / centerY) * -rotateMax;
+        targetY = ((mouseX - centerX) / centerX) * rotateMax;
       });
 
       container.addEventListener('mouseleave', () => {
-        // Reset transform on leave
-        poster.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+        mouseActive = false;
+        targetX = 0;
+        targetY = 0;
       });
+
+      function animate() {
+        // Idle motion logic
+        const time = Date.now() * 0.0008;
+        const idleX = Math.sin(time) * 1.5;
+        const idleY = Math.cos(time * 0.7) * 1.2;
+
+        let finalTargetX = mouseActive ? targetX : idleX;
+        let finalTargetY = mouseActive ? targetY : idleY;
+
+        // Apply scroll impulse
+        const scrolled = window.pageYOffset;
+        finalTargetX += Math.sin(scrolled * 0.01) * 3;
+
+        currentX += (finalTargetX - currentX) * lerpAmount;
+        currentY += (finalTargetY - currentY) * lerpAmount;
+
+        poster.style.transform = `perspective(1000px) rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
     }
   </script>
 </body>
