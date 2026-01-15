@@ -31,16 +31,49 @@ body {
     radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.15), transparent 40%);
 }
 
-/* Allow scroll on desktop */
-@media (min-width: 1025px) {
-  body {
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* Allow scroll on all devices to accommodate the new section */
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .led-text {
   font-family: 'LEDDot', monospace;
+}
+
+/* Floating Background Orb */
+.background-orb {
+  position: fixed;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle,
+      rgba(255, 51, 51, 0.12) 0%,
+      rgba(255, 51, 51, 0.04) 40%,
+      transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(50px);
+  mix-blend-mode: plus-lighter;
+  /* Better blending for dark themes */
+  will-change: transform;
+}
+
+.background-orb::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  height: 140px;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid rgba(255, 51, 51, 0.1);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 20px rgba(255, 51, 51, 0.1),
+    0 0 40px rgba(255, 51, 51, 0.05);
 }
 
 /* Layout */
@@ -63,13 +96,11 @@ body {
 .top-bar {
   display: flex;
   flex-direction: row;
-  /* Force row for desktop */
   justify-content: space-between;
   align-items: center;
-  /* Center vertically */
   padding-top: 40px;
+  /* Logo/Header back to top position */
   height: auto;
-  /* Let content define height */
   min-height: 80px;
   width: 100%;
   box-sizing: border-box;
@@ -106,8 +137,12 @@ body {
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 60px;
-  align-items: center;
-  margin-bottom: 20px;
+  align-items: start;
+  /* Changed from center to start to prevent pulling content up */
+  margin-top: 120px;
+  /* Reduced from 180px to move it up slightly */
+  margin-bottom: 60px;
+  /* Increased from 20px to create a gap between content and socials */
   width: 100%;
   box-sizing: border-box;
 }
@@ -123,6 +158,8 @@ body {
   height: fit-content;
   align-self: center;
   gap: 15px;
+  margin-top: 20px;
+  /* Added breathing room */
 }
 
 .hero-title {
@@ -159,6 +196,99 @@ body {
   min-height: 150px;
   align-items: center;
   box-sizing: border-box;
+}
+
+/* Side Quests Section */
+.side-quests {
+  margin-top: 100px;
+  /* Moved up from 180px */
+  margin-bottom: 200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  position: relative;
+  background-image: radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.12), transparent 70%);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.side-quests.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-title {
+  color: var(--primary-red);
+  font-size: 32px;
+  text-align: center;
+  letter-spacing: 4px;
+  text-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+  font-weight: normal;
+  /* Ensure it's not bold */
+}
+
+.quests-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  width: 100%;
+}
+
+.quest-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+}
+
+.quest-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  /* Small cap for desktop */
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: radial-gradient(rgba(255, 51, 51, 0.25) 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+  padding: 55px;
+  /* Increased padding to make images smaller */
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 51, 51, 0.05);
+  border-radius: 20px;
+}
+
+.quest-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+}
+
+.quest-item:hover .quest-image {
+  transform: scale(1.03) translateY(-10px);
+  box-shadow: 0 25px 50px rgba(255, 51, 51, 0.15);
+}
+
+.quest-description {
+  color: var(--text-gray);
+  font-family: 'Pathway Extreme', sans-serif;
+  font-size: 17px;
+  line-height: 1.5;
+  text-align: center;
+  max-width: 320px;
+  margin: 0;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .bottom-left,
@@ -527,6 +657,13 @@ body {
     grid-template-columns: 1fr;
     gap: 40px;
     margin-bottom: 40px;
+    margin-top: 40px;
+    /* Reduced for tablet */
+  }
+
+  .top-bar {
+    padding-top: 25px;
+    /* Compact for tablet */
   }
 
   .hero-text {
@@ -576,6 +713,26 @@ body {
     width: 90%;
     max-width: 500px;
   }
+
+  /* Side Quests Tablet */
+  .side-quests {
+    margin-top: 60px;
+    gap: 40px;
+  }
+
+  .quests-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .quest-image-container {
+    padding: 20px;
+  }
+
+  .quest-description {
+    font-size: 16px;
+    max-width: 90%;
+  }
 }
 
 /* Mobile landscape and small tablets (768px and below) */
@@ -593,8 +750,9 @@ body {
     align-items: center;
     gap: 10px;
     height: auto;
-    padding: 15px 20px;
-    margin-bottom: 20px;
+    padding: 12px 15px !important;
+    /* Force compact padding for mobile */
+    margin-bottom: 0px;
     position: fixed;
     /* Fixed to viewport */
     top: 0;
@@ -649,6 +807,11 @@ body {
     font-size: 16px;
     max-width: 220px;
     /* Force wrap after 'communities' */
+  }
+
+  .main-content {
+    margin-top: 20px;
+    /* Tight spacing for mobile fixed header */
   }
 
   .cards-section {
@@ -838,96 +1001,29 @@ body {
     width: 26px;
     height: 26px;
   }
-}
 
-/* Side Quests Section */
-.side-quests {
-  margin-top: 80px;
-  padding: 60px 0;
-  text-align: center;
-  width: 100%;
-}
-
-.side-quests-title {
-  color: var(--primary-red);
-  font-size: 32px;
-  margin-bottom: 60px;
-  letter-spacing: 4px;
-  text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
-  font-weight: 400;
-  /* Made thinner */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  /* Space for centered arrows */
-}
-
-.quests-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  align-items: start;
-}
-
-.quest-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.quest-image-wrapper {
-  position: relative;
-  padding: 30px;
-  margin-bottom: 20px;
-}
-
-/* Red Dot Grid Background */
-.quest-image-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: radial-gradient(var(--primary-red) 1.5px, transparent 1.5px);
-  background-size: 15px 15px;
-  opacity: 0.3;
-  z-index: 1;
-}
-
-.quest-image {
-  width: 250px;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 8px;
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition: transform 0.3s ease;
-}
-
-.quest-item:hover .quest-image {
-  transform: translateY(-5px);
-}
-
-.quest-text {
-  color: var(--text-gray);
-  font-family: 'Pathway Extreme', sans-serif;
-  font-size: 16px;
-  line-height: 1.5;
-  max-width: 280px;
-  margin-top: 10px;
-}
-
-/* Tablet & Mobile for Side Quests */
-@media (max-width: 1024px) {
-  .quests-grid {
-    grid-template-columns: 1fr;
-    gap: 60px;
-  }
-
+  /* Side Quests Mobile */
   .side-quests {
     margin-top: 40px;
+    gap: 30px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+
+  .quest-item {
+    gap: 20px;
+  }
+
+  .quest-image-container {
+    padding: 15px;
+    background-size: 15px 15px;
+  }
+
+  .quest-description {
+    font-size: 15px;
+    min-height: auto;
   }
 }

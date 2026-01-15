@@ -6,12 +6,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="ricon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="ricon.ico" type="image/x-icon">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <title>Rishhub</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=1.0.1" />
 </head>
 
 <body>
   <div class="app-container">
+    <!-- Floating Background Orb -->
+    <div class="background-orb" id="background-orb"></div>
     <!-- Header -->
     <header class="top-bar">
       <div class="brand">
@@ -115,36 +120,32 @@
 
     <!-- Side Quests Section -->
     <section class="side-quests" id="side-quests">
-      <h2 class="side-quests-title led-text">
-        <span>&lt;&lt;</span>
-        <span>SIDE QUESTS</span>
-        <span>&gt;&gt;</span>
-      </h2>
+      <h2 class="led-text section-title">&lt;&lt; SIDE QUESTS &gt;&gt;</h2>
       <div class="quests-grid">
-        <!-- Quest 1: Sports -->
+        <!-- Quest 1 -->
         <div class="quest-item">
-          <div class="quest-image-wrapper">
+          <div class="quest-image-container">
             <img src="sports_quest.png" alt="Sports" class="quest-image" />
           </div>
-          <p class="quest-text">
+          <p class="quest-description">
             I'm into sports too. I play lawn tennis, table tennis, pickleball, padel and sometimes I swim as well.
           </p>
         </div>
 
-        <!-- Quest 2: Transition -->
+        <!-- Quest 2 -->
         <div class="quest-item">
-          <div class="quest-image-wrapper">
+          <div class="quest-image-container">
             <img src="but_quest.png" alt="But..." class="quest-image" />
           </div>
-          <p class="quest-text">but...</p>
+          <p class="quest-description">but...</p>
         </div>
 
-        <!-- Quest 3: Hosting -->
+        <!-- Quest 3 -->
         <div class="quest-item">
-          <div class="quest-image-wrapper">
+          <div class="quest-image-container">
             <img src="hosting_quest.png" alt="Hosting" class="quest-image" />
           </div>
-          <p class="quest-text">
+          <p class="quest-description">
             I also do anchoring, host events, and engage in long conversations with people.
           </p>
         </div>
@@ -207,23 +208,75 @@
       animate();
     }
 
-    // Physics for Side Quest Images
-    document.querySelectorAll('.quest-image-wrapper').forEach(wrapper => {
-      const img = wrapper.querySelector('.quest-image');
-      wrapper.addEventListener('mousemove', (e) => {
-        const rect = wrapper.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const tiltX = ((y - centerY) / centerY) * -10;
-        const tiltY = ((x - centerX) / centerX) * 10;
-        img.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+    // Scroll Reveal for Side Quests
+    const sideQuests = document.getElementById('side-quests');
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('reveal');
+        }
       });
-      wrapper.addEventListener('mouseleave', () => {
-        img.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
-      });
+    }, observerOptions);
+
+    if (sideQuests) {
+      observer.observe(sideQuests);
+    }
+
+    // Floating Orb Interaction Layer
+    const orb = document.getElementById('background-orb');
+    let orbX = window.innerWidth / 2;
+    let orbY = window.innerHeight / 2;
+    let targetOrbX = orbX;
+    let targetOrbY = orbY;
+    let mouseX = orbX;
+    let mouseY = orbY;
+    let lastMouseMove = Date.now();
+    let isIdle = false;
+
+    window.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      lastMouseMove = Date.now();
+      isIdle = false;
     });
+
+    function animateOrb() {
+      const now = Date.now();
+      const time = now * 0.0005;
+
+      // Check if mouse is idle (no move for 2 seconds)
+      if (now - lastMouseMove > 2000) {
+        isIdle = true;
+      }
+
+      if (isIdle) {
+        // Independent wandering path when idle
+        // Using Lissajous-curve-like movement to cover the screen
+        targetOrbX = (window.innerWidth / 2) + Math.sin(time * 0.7) * (window.innerWidth * 0.35);
+        targetOrbY = (window.innerHeight / 2) + Math.cos(time * 0.5) * (window.innerHeight * 0.35);
+      } else {
+        // Follow mouse with subtle internal vibration
+        const vibrationX = Math.sin(time * 10) * 5;
+        const vibrationY = Math.cos(time * 10) * 5;
+        targetOrbX = mouseX + vibrationX;
+        targetOrbY = mouseY + vibrationY;
+      }
+
+      // Smooth lerp (slower when idle for more "floaty" feel)
+      const lerpSpeed = isIdle ? 0.01 : 0.05;
+      orbX += (targetOrbX - orbX) * lerpSpeed;
+      orbY += (targetOrbY - orbY) * lerpSpeed;
+
+      orb.style.transform = `translate(${orbX - 200}px, ${orbY - 200}px)`;
+
+      requestAnimationFrame(animateOrb);
+    }
+
+    animateOrb();
   </script>
 </body>
 
