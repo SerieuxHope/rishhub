@@ -112,6 +112,44 @@
         </div>
       </div>
     </footer>
+
+    <!-- Side Quests Section -->
+    <section class="side-quests" id="side-quests">
+      <h2 class="side-quests-title led-text">
+        <span>&lt;&lt;</span>
+        <span>SIDE QUESTS</span>
+        <span>&gt;&gt;</span>
+      </h2>
+      <div class="quests-grid">
+        <!-- Quest 1: Sports -->
+        <div class="quest-item">
+          <div class="quest-image-wrapper">
+            <img src="sports_quest.png" alt="Sports" class="quest-image" />
+          </div>
+          <p class="quest-text">
+            I'm into sports too. I play lawn tennis, table tennis, pickleball, padel and sometimes I swim as well.
+          </p>
+        </div>
+
+        <!-- Quest 2: Transition -->
+        <div class="quest-item">
+          <div class="quest-image-wrapper">
+            <img src="but_quest.png" alt="But..." class="quest-image" />
+          </div>
+          <p class="quest-text">but...</p>
+        </div>
+
+        <!-- Quest 3: Hosting -->
+        <div class="quest-item">
+          <div class="quest-image-wrapper">
+            <img src="hosting_quest.png" alt="Hosting" class="quest-image" />
+          </div>
+          <p class="quest-text">
+            I also do anchoring, host events, and engage in long conversations with people.
+          </p>
+        </div>
+      </div>
+    </section>
   </div>
 
   <script>
@@ -168,6 +206,24 @@
 
       animate();
     }
+
+    // Physics for Side Quest Images
+    document.querySelectorAll('.quest-image-wrapper').forEach(wrapper => {
+      const img = wrapper.querySelector('.quest-image');
+      wrapper.addEventListener('mousemove', (e) => {
+        const rect = wrapper.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const tiltX = ((y - centerY) / centerY) * -10;
+        const tiltY = ((x - centerX) / centerX) * 10;
+        img.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+      });
+      wrapper.addEventListener('mouseleave', () => {
+        img.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+      });
+    });
   </script>
 </body>
 

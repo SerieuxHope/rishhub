@@ -31,11 +31,11 @@ body {
     radial-gradient(circle at 90% 80%, rgba(139, 0, 0, 0.15), transparent 40%);
 }
 
-/* Prevent scroll on desktop only */
+/* Allow scroll on desktop */
 @media (min-width: 1025px) {
   body {
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 }
 
@@ -837,5 +837,97 @@ body {
   .icon-wrapper img {
     width: 26px;
     height: 26px;
+  }
+}
+
+/* Side Quests Section */
+.side-quests {
+  margin-top: 80px;
+  padding: 60px 0;
+  text-align: center;
+  width: 100%;
+}
+
+.side-quests-title {
+  color: var(--primary-red);
+  font-size: 32px;
+  margin-bottom: 60px;
+  letter-spacing: 4px;
+  text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+  font-weight: 400;
+  /* Made thinner */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  /* Space for centered arrows */
+}
+
+.quests-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.quest-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quest-image-wrapper {
+  position: relative;
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+/* Red Dot Grid Background */
+.quest-image-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(var(--primary-red) 1.5px, transparent 1.5px);
+  background-size: 15px 15px;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.quest-image {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.quest-item:hover .quest-image {
+  transform: translateY(-5px);
+}
+
+.quest-text {
+  color: var(--text-gray);
+  font-family: 'Pathway Extreme', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 280px;
+  margin-top: 10px;
+}
+
+/* Tablet & Mobile for Side Quests */
+@media (max-width: 1024px) {
+  .quests-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .side-quests {
+    margin-top: 40px;
   }
 }
